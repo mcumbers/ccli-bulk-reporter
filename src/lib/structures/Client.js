@@ -19,35 +19,24 @@ class Client {
 		}
 
 		const browser = await puppeteer.launch({ headless: this.settings.headless });
+		const page = await browser.newPage();
 
-		await this.reportCycle(browser);
+		await this.ccliLogin(page);
+		await this.ccliInit(page);
+		await this.reportCycle(page);
 		await browser.close();
 		return;
 	}
 
-	async reportCycle(browser) {
-		const page = await browser.newPage();
-
-		await page.goto('https://profile.ccli.com/account/signin?appContext=OLR&returnUrl=https%3a%2f%2folr.ccli.com%3a443%2f');
-		await page.type('#EmailAddress', this.settings.ccliEmail, { delay: 25 });
-		await page.type('#Password', this.settings.ccliPassword, { delay: 25 });
-		await page.click('#Sign-In');
-		await page.waitForSelector('#SearchTerm');
-		await page.type('#SearchTerm', '3350395', { delay: 50 });
-		await page.click(`[onclick="return $('#SearchTerm').val() != '' && $('#SearchTerm').val() != ''"]`);
-		await page.waitForNavigation();
-		await page.waitForSelector('#showReportWindow');
-		await page.click('#showReportWindow');
-		await page.waitForSelector('[name="PrintCount"]');
-		await page.click('.application-name');
-
+	async reportCycle(page) {
+		console.log('Beginning Individual Song Reports...');
 		for await (const song of this.songs) {
-			console.log(song);
-			await page.waitForSelector('#SearchTerm');
+			console.log(`Reporting Song: CCLI#${song[1].id}`);
 			await page.type('#SearchTerm', song[1].id.toString(), { delay: 100 });
 			await page.click(`[onclick="return $('#SearchTerm').val() != '' && $('#SearchTerm').val() != ''"]`);
-			await page.waitForNavigation();
-			await page.waitForSelector('[name="PrintCount"]');
+			await page.waitForSelector('#searchResults');
+
+			if (await page.$('.ss-pd')) continue;
 
 			await page.focus('#SearchTerm');
 			await page.keyboard.press('Tab', { delay: 50 });
@@ -67,6 +56,27 @@ class Client {
 			await page.click('.application-name');
 			await page.waitForSelector('#SearchTerm');
 		}
+	}
+
+	async ccliLogin(page) {
+		console.log('Logging into CCLI Reporting.');
+		await page.goto('https://profile.ccli.com/account/signin?appContext=OLR&returnUrl=https%3a%2f%2folr.ccli.com%3a443%2f');
+		await page.type('#EmailAddress', this.settings.ccliEmail, { delay: 25 });
+		await page.type('#Password', this.settings.ccliPassword, { delay: 25 });
+		await page.click('#Sign-In');
+		await page.waitForSelector('#SearchTerm');
+		console.log('Logged into CCLI Reporting.');
+	}
+
+	async ccliInit(page) {
+		console.log('Making sure the reporting fields will be there...');
+		await page.type('#SearchTerm', '3350395', { delay: 50 });
+		await page.click(`[onclick="return $('#SearchTerm').val() != '' && $('#SearchTerm').val() != ''"]`);
+		// await page.waitForNavigation();
+		await page.waitForSelector('#showReportWindow');
+		await page.click('#showReportWindow');
+		await page.waitForSelector('[name="PrintCount"]');
+		await page.click('.application-name');
 	}
 
 }
