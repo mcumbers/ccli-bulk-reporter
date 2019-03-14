@@ -5,8 +5,9 @@ const Config = require('./Config');
 const SongStore = require('./SongStore');
 
 class Client {
+
 	constructor(config = {}) {
-		if(!config instanceof Config) throw 'Client requires a valid Config';
+		if (!(config instanceof Config)) throw 'Client requires a valid Config';
 		this.settings = config;
 		this.songs = new SongStore;
 	}
@@ -26,7 +27,7 @@ class Client {
 
 	async reportCycle(browser) {
 		const page = await browser.newPage();
-		
+
 		await page.goto('https://profile.ccli.com/account/signin?appContext=OLR&returnUrl=https%3a%2f%2folr.ccli.com%3a443%2f');
 		await page.type('#EmailAddress', this.settings.ccliEmail, { delay: 25 });
 		await page.type('#Password', this.settings.ccliPassword, { delay: 25 });
@@ -39,7 +40,7 @@ class Client {
 		await page.click('#showReportWindow');
 		await page.waitForSelector('[name="PrintCount"]');
 		await page.click('.application-name');
-		
+
 		for await (const song of this.songs) {
 			console.log(song);
 			await page.waitForSelector('#SearchTerm');
@@ -66,7 +67,6 @@ class Client {
 			await page.click('.application-name');
 			await page.waitForSelector('#SearchTerm');
 		}
-
 	}
 
 }
