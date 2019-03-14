@@ -25,6 +25,8 @@ class Client {
 		await this.ccliInit(page);
 		await this.reportCycle(page);
 		await browser.close();
+
+		console.log('Terminating Session.');
 		return;
 	}
 
@@ -56,6 +58,7 @@ class Client {
 			await page.click('.application-name');
 			await page.waitForSelector('#SearchTerm');
 		}
+		console.log('Finished Reporting.');
 	}
 
 	async ccliLogin(page) {
@@ -72,7 +75,6 @@ class Client {
 		console.log('Making sure the reporting fields will be there...');
 		await page.type('#SearchTerm', '3350395', { delay: 50 });
 		await page.click(`[onclick="return $('#SearchTerm').val() != '' && $('#SearchTerm').val() != ''"]`);
-		// await page.waitForNavigation();
 		await page.waitForSelector('#showReportWindow');
 		await page.click('#showReportWindow');
 		await page.waitForSelector('[name="PrintCount"]');
