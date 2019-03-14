@@ -1,0 +1,25 @@
+{
+  "name": "ccli-bulk-reporter",
+  "version": "1.0.0",
+  "description": "An automated, self-contained, bulk reporter for CCLI song usage.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo 'No test specified!'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mcumbers/ccli-bulk-reporter.git"
+  },
+  "author": "Michael Cumbers",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mcumbers/ccli-bulk-reporter/issues"
+  },
+  "homepage": "https://github.com/mcumbers/ccli-bulk-reporter#readme",
+  "dependencies": {
+    "puppeteer": "^1.13.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1"
+  }
+}
