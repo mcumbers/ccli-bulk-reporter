@@ -1,6 +1,6 @@
 # ccli-bulk-reporter
 [![Open Issues](https://img.shields.io/github/issues/mcumbers/ccli-bulk-reporter.svg)](https://github.com/mcumbers/ccli-bulk-reporter/issues)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3294fc403efe4169b186417d9ff0be2a)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mcumbers/ccli-bulk-reporter&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/bdac85ce1d584e65a28da5e6eba4bfc2)](https://www.codacy.com/app/mcumbers/ccli-bulk-reporter?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mcumbers/ccli-bulk-reporter&amp;utm_campaign=Badge_Grade)
 [![David](https://img.shields.io/david/mcumbers/ccli-bulk-reporter.svg?maxAge=3600)](https://david-dm.org/mcumbers/ccli-bulk-reporter/)
 
 <p align="center">
